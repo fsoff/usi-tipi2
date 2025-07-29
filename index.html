@@ -3,17 +3,12 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Overlay Tipo di Uso - Click attivo (corretto)</title>
+  <title>Overlay Usi - Aree cliccabili</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; }
     html, body {
       width: 100%;
       height: 100%;
-    }
-    body {
       font-family: 'Avenir Next', 'Avenir Next World', sans-serif;
       overflow-x: hidden;
     }
@@ -21,24 +16,15 @@
       position: relative;
       width: 100%;
     }
-    .container img {
+    img {
       width: 100%;
       height: auto;
       display: block;
     }
-    .hotspot {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      transform: translate(-50%, -50%);
-    }
     .tooltip {
       display: none;
       position: absolute;
-      max-width: 360px;
+      max-width: 320px;
       background-color: #6c8cc4;
       color: white;
       padding: 14px;
@@ -46,51 +32,54 @@
       font-size: 15px;
       z-index: 10;
     }
-    .tooltip.active {
-      display: block;
-    }
+    .tooltip.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="container" onclick="hideAllTooltips(event)">
-    <img src="Tipo-uso.png" alt="Tipo di Uso">
+  <div class="container" onclick="hideAll(event)">
+    <img src="Usi-rev.png" alt="Tipologie di uso" usemap="#usi-map">
+    <map name="usi-map">
+      <area shape="poly" coords="361,232,451,282,449,383,361,432,270,377,274,279" href="#" onclick="showTooltip(event,'tooltip-g')">
+      <area shape="poly" coords="306,771,427,838,428,979,304,1050,179,971,183,834" href="#" onclick="showTooltip(event,'tooltip-l')">
+      <area shape="poly" coords="1014,214,1114,275,1116,389,1014,443,913,382,916,268" href="#" onclick="showTooltip(event,'tooltip-r')">
+      <area shape="poly" coords="1012,751,1138,821,1139,956,1018,1033,889,958,889,819" href="#" onclick="showTooltip(event,'tooltip-p')">
+    </map>
 
-    <button class="hotspot" style="top: 339px; left: 357px;" onclick="showTooltip(event, 'tooltip-g')"></button>
-    <div id="tooltip-g" class="tooltip" style="top: 439px; left: 357px;">
+    <!-- Tooltip G -->
+    <div id="tooltip-g" class="tooltip" style="top: 250px; left: 500px;">
       <strong>G – Uso Generico</strong><br>
       Aree in cui sono tendenzialmente consentiti tutti gli usi, con meccanismi di regolazione specifica e reciproca definiti o da definire nell’ambito delle norme nazionali ed internazionali o dei piani di settore, in modo da garantire la sicurezza, ridurre e controllare gli impatti ambientali e favorire la coesistenza fra gli usi.
     </div>
 
-    <button class="hotspot" style="top: 896px; left: 1021px;" onclick="showTooltip(event, 'tooltip-p')"></button>
-    <div id="tooltip-p" class="tooltip" style="top: 796px; left: 721px;">
-      <strong>P – Uso Prioritario</strong><br>
-      Aree per le quali il Piano fornisce indicazioni di priorità d’uso e di sviluppo, indicando anche gli altri usi da garantire o consentire attraverso regolazioni reciproche e con l’uso prioritario identificato.
+    <!-- Tooltip L -->
+    <div id="tooltip-l" class="tooltip" style="top: 850px; left: 500px;">
+      <strong>L – Uso Limitato</strong><br>
+      Aree per le quali viene indicato un uso prevalente, con altri usi che possono essere presenti, con o senza specifiche limitazioni, se e in quanto compatibili con l’uso prevalente.
     </div>
 
-    <button class="hotspot" style="top: 334px; left: 1009px;" onclick="showTooltip(event, 'tooltip-r')"></button>
-    <div id="tooltip-r" class="tooltip" style="top: 334px; left: 649px;">
+    <!-- Tooltip R -->
+    <div id="tooltip-r" class="tooltip" style="top: 300px; left: 650px;">
       <strong>R – Uso Riservato</strong><br>
       Aree riservate ad uno specifico uso. Altri usi sono consentiti esclusivamente per le esigenze dell’uso riservato o salvo deroghe e concessioni da parte del soggetto responsabile o gestore dell’uso riservato.
     </div>
 
-    <button class="hotspot" style="top: 911px; left: 312px;" onclick="showTooltip(event, 'tooltip-l')"></button>
-    <div id="tooltip-l" class="tooltip" style="top: 811px; left: 312px;">
-      <strong>L – Uso Limitato</strong><br>
-      Aree per le quali viene indicato un uso prevalente, con altri usi che possono essere presenti, con o senza specifiche limitazioni, se e in quanto compatibili con l’uso prevalente.
+    <!-- Tooltip P -->
+    <div id="tooltip-p" class="tooltip" style="top: 850px; left: 650px;">
+      <strong>P – Uso Prioritario</strong><br>
+      Aree per le quali il Piano fornisce indicazioni di priorità d’uso e di sviluppo, indicando anche gli altri usi da garantire o consentire attraverso regolazioni reciproche e con l’uso prioritario identificato.
     </div>
   </div>
 
-  <script>
-    function showTooltip(event, id) {
-      event.stopPropagation();
-      hideAllTooltips();
-      document.getElementById(id).classList.add('active');
-    }
-
-    function hideAllTooltips(event) {
-      const tooltips = document.querySelectorAll('.tooltip');
-      tooltips.forEach(t => t.classList.remove('active'));
-    }
-  </script>
+<script>
+function showTooltip(event, id) {
+  event.preventDefault();
+  event.stopPropagation();
+  hideAll();
+  document.getElementById(id).classList.add('active');
+}
+function hideAll() {
+  document.querySelectorAll('.tooltip').forEach(t => t.classList.remove('active'));
+}
+</script>
 </body>
 </html>
